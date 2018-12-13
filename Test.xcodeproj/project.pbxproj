@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2F653B1D33C981DA79F6E2EB /* libPods-Test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 785E5A34CD78FD0C1E2B0EED /* libPods-Test.a */; };
+		FE3541E921C207A100742DB1 /* DrawPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3541E821C207A100742DB1 /* DrawPDFViewController.m */; };
+		FE3541EC21C207D900742DB1 /* DrawPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3541EB21C207D900742DB1 /* DrawPDFView.m */; };
 		FE40D9DC21BDFF9C008574F8 /* face.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE40D9DB21BDFF9C008574F8 /* face.jpg */; };
 		FE40D9E121BE090F008574F8 /* photo.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE40D9E021BE090F008574F8 /* photo.pdf */; };
 		FE40DA2E21BE1176008574F8 /* ReaderContentTile.m in Sources */ = {isa = PBXBuildFile; fileRef = FE40D9E821BE1176008574F8 /* ReaderContentTile.m */; };
@@ -83,6 +85,10 @@
 		03F68AE3DCE59D6A89C0E7CF /* Pods-Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.release.xcconfig"; sourceTree = "<group>"; };
 		5A79815DBC8D92828669FF5F /* Pods-Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.debug.xcconfig"; sourceTree = "<group>"; };
 		785E5A34CD78FD0C1E2B0EED /* libPods-Test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE3541E721C207A100742DB1 /* DrawPDFViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawPDFViewController.h; sourceTree = "<group>"; };
+		FE3541E821C207A100742DB1 /* DrawPDFViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawPDFViewController.m; sourceTree = "<group>"; };
+		FE3541EA21C207D900742DB1 /* DrawPDFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawPDFView.h; sourceTree = "<group>"; };
+		FE3541EB21C207D900742DB1 /* DrawPDFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawPDFView.m; sourceTree = "<group>"; };
 		FE40D9DB21BDFF9C008574F8 /* face.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = face.jpg; sourceTree = "<group>"; };
 		FE40D9E021BE090F008574F8 /* photo.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = photo.pdf; sourceTree = "<group>"; };
 		FE40D9E821BE1176008574F8 /* ReaderContentTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderContentTile.m; sourceTree = "<group>"; };
@@ -350,6 +356,10 @@
 				FEC9A54321B7807400DBAB02 /* AppDelegate.m */,
 				FEC9A54521B7807400DBAB02 /* ViewController.h */,
 				FEC9A54621B7807400DBAB02 /* ViewController.m */,
+				FE3541E721C207A100742DB1 /* DrawPDFViewController.h */,
+				FE3541E821C207A100742DB1 /* DrawPDFViewController.m */,
+				FE3541EA21C207D900742DB1 /* DrawPDFView.h */,
+				FE3541EB21C207D900742DB1 /* DrawPDFView.m */,
 				FE40DA6A21BE5BC6008574F8 /* image */,
 				FE40DA6321BE5360008574F8 /* Category */,
 				FE40D9E621BE1176008574F8 /* Reader */,
@@ -536,6 +546,7 @@
 				FE40DA3421BE1176008574F8 /* ReaderContentView.m in Sources */,
 				FE40DA3521BE1176008574F8 /* ReaderViewController.m in Sources */,
 				FE40DA6921BE5361008574F8 /* UIWebView+WYFile.m in Sources */,
+				FE3541EC21C207D900742DB1 /* DrawPDFView.m in Sources */,
 				FE40DA3121BE1176008574F8 /* ReaderContentPage.m in Sources */,
 				FE40DA2F21BE1176008574F8 /* UIXToolbarView.m in Sources */,
 				FE40DA3621BE1176008574F8 /* ReaderThumbFetch.m in Sources */,
@@ -549,6 +560,7 @@
 				FEC9A55221B7807500DBAB02 /* main.m in Sources */,
 				FE40DA3C21BE1176008574F8 /* ReaderThumbsView.m in Sources */,
 				FEC9A54421B7807400DBAB02 /* AppDelegate.m in Sources */,
+				FE3541E921C207A100742DB1 /* DrawPDFViewController.m in Sources */,
 				FE40DA3D21BE1176008574F8 /* ThumbsViewController.m in Sources */,
 				FE40DA4121BE1176008574F8 /* ReaderMainPagebar.m in Sources */,
 			);

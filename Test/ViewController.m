@@ -14,9 +14,10 @@
 #import <SVProgressHUD.h>
 #import <WebKit/WebKit.h>
 #import "UIWebView+WYFile.h"
+#import "DrawPDFViewController.h"
 #define statusH     [UIApplication sharedApplication].statusBarFrame.size.height
 
-@interface ViewController ()<QLPreviewControllerDataSource,QLPreviewControllerDelegate,ReaderViewControllerDelegate,UIWebViewDelegate>
+@interface ViewController ()<QLPreviewControllerDataSource,QLPreviewControllerDelegate,ReaderViewControllerDelegate,UIWebViewDelegate,UIPageViewControllerDataSource>
 @property (strong, nonatomic) UIWebView *webView;
 
 @end
@@ -26,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [self addBtn];
+    [self addBtn];
     //显示
 //    [self loadPDFFile1];
 //    [self loadPDFFile2];
@@ -45,12 +46,12 @@
 //    [self createPDFFileInView:imgView];
     
 
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(50, statusH, 100, 40)];
-//    btn.backgroundColor = [UIColor orangeColor];
-    [btn setTitle:@"转换PDF" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(convertImagesToPDFFile) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(50, statusH, 100, 40)];
+////    btn.backgroundColor = [UIColor orangeColor];
+//    [btn setTitle:@"转换PDF" forState:UIControlStateNormal];
+//    [btn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(convertImagesToPDFFile) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:btn];
 //
 //    UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-100-50, statusH, 100, 40)];
 ////    btn1.backgroundColor = [UIColor greenColor];
@@ -184,7 +185,7 @@
     
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
     btn.backgroundColor = [UIColor orangeColor];
-    [btn addTarget:self action:@selector(downloadPDFFile2) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(loadPDFFile3) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
 }
 
@@ -239,63 +240,62 @@
     
 //    [self drawPDF];
 //    [self showOnPageVC];
+    
+    NSDictionary *options =[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:UIPageViewControllerSpineLocationMin]
+                                                       forKey: UIPageViewControllerOptionSpineLocationKey];
+    
+    UIPageViewController *pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
+                                                                           navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                         options:options];
+    pageController.dataSource = self;
+    DrawPDFViewController *pdfController = [self getViewControllerWithPage:1];
+    
+    NSArray *viewControllers =[NSArray arrayWithObject:pdfController];
+    [pageController setViewControllers:viewControllers
+                             direction:UIPageViewControllerNavigationDirectionForward
+                              animated:NO
+                            completion:nil];
+    
+    [self.navigationController pushViewController:pageController animated:YES];
+//    [pageController release];
 }
 
-////(1)将pdf单页的文档画在UIView的画布上
-//- (void)drawPDF{
-//
-//    CFURLRef pdfURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("photo2.pdf"), NULL, NULL);
-//    //    CFURLRef pdfURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), (__bridge CFStringRef)self.fileName, NULL, NULL);
-//    //创建CGPDFDocument对象
-//    CGPDFDocumentRef pdfDocument = CGPDFDocumentCreateWithURL((CFURLRef)pdfURL);
-//
-//    //获取当前的上下文
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    //Quartz坐标系和UIView坐标系不一样所致，调整坐标系，使pdf正立
-//    CGContextTranslateCTM(context, 0.0, self.view.bounds.size.height);
-//    CGContextScaleCTM(context, 1.0, -1.0);
-//
-//    //获取指定页的pdf文档
-//    CGPDFPageRef page = CGPDFDocumentGetPage(pdfDocument, 1);
-//    //创建一个仿射变换，该变换基于将PDF页的BOX映射到指定的矩形中。
-//    CGAffineTransform pdfTransform = CGPDFPageGetDrawingTransform(page, kCGPDFCropBox, self.view.bounds, 0, true);
-//    CGContextConcatCTM(context, pdfTransform);
-//    //将pdf绘制到上下文中
-//    CGContextDrawPDFPage(context, page);
-//}
-////(2)用UIPageViewController展示分页的pdf文档
-//- (void)showOnPageVC{
-//
-//    //初始化PDFPageModel
-//    pdfPageModel = [[CGContextDrawPDFPageModel alloc] initWithPDFDocument:pdfDocument];
-//
-//    // UIPageViewControllerSpineLocationMin 单页显示
-//    NSDictionary *options = [NSDictionary dictionaryWithObject:
-//                             [NSNumber numberWithInteger: UIPageViewControllerSpineLocationMin]
-//                                                        forKey: UIPageViewControllerOptionSpineLocationKey];
-//
-//    //初始化UIPageViewController，UIPageViewControllerTransitionStylePageCurl翻页效果，UIPageViewControllerNavigationOrientationHorizontal水平方向翻页
-//    pageViewCtrl = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-//                                                                 options:options];
-//    //承载pdf每页内容的控制器
-//    CGContextDrawPDFPageController *initialViewController = [pdfPageModel viewControllerAtIndex:1];
-//    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
-//    //设置UIPageViewController的数据源
-//    [pageViewCtrl setDataSource:pdfPageModel];
-//
-//    //pageViewCtrl.doubleSided = YES;设置正反面都有文字
-//    //设置pageViewCtrl的子控制器
-//    [pageViewCtrl setViewControllers:viewControllers
-//                           direction:UIPageViewControllerNavigationDirectionReverse
-//                            animated:NO
-//                          completion:^(BOOL f){}];
-//    [self addChildViewController:pageViewCtrl];
-//    [self.view addSubview:pageViewCtrl.view];
-//    //当我们向我们的视图控制器容器（就是父视图控制器，它调用addChildViewController方法加入子视图控制器，它就成为了视图控制器的容器）中添加（或者删除）子视图控制器后，必须调用该方法，告诉iOS，已经完成添加（或删除）子控制器的操作。
-//    [pageViewCtrl didMoveToParentViewController:self];
-//}
+- (DrawPDFViewController *)getViewControllerWithPage:(NSInteger)page
+{
+    NSString *filename = @"photo2.pdf";
+    CFURLRef pdfURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), (__bridge CFStringRef)filename, NULL, NULL);
+    CGPDFDocumentRef pdfDocument = CGPDFDocumentCreateWithURL((CFURLRef)pdfURL);
+    CFRelease(pdfURL);
+    
+    DrawPDFViewController *pdfController = [[DrawPDFViewController alloc] initWithPage:page withPDFDoc:pdfDocument];
+    
+    return pdfController;
+}
 
+#pragma - mark UIPageViewControllerDataSource
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    DrawPDFViewController *controller = (DrawPDFViewController *)viewController;
+    
+    if (controller.page-1 < 1)
+    {
+        return nil;
+    }
+    
+    return [self getViewControllerWithPage:controller.page-1];
+}
 
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    DrawPDFViewController *controller = (DrawPDFViewController *)viewController;
+    long pageSum = CGPDFDocumentGetNumberOfPages(controller.pdfDocument);
+    
+    if (controller.page+1 > pageSum)
+    {
+        return nil;
+    }
+    return [self getViewControllerWithPage:controller.page+1];
+}
 
 //4.第三方框架vfr/Reader加载pdf文档
 - (void)loadPDFFile4{
